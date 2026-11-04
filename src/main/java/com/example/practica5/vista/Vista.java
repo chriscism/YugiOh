@@ -42,7 +42,7 @@ public class Vista extends BorderPane {
         panel.setSpacing(25);
         panel.setAlignment(Pos.TOP_CENTER);
         panel.setStyle("-fx-background-color: transparent;");
-
+        // encabezados
         HBox encabezado = new HBox();
         encabezado.setAlignment(Pos.CENTER_LEFT);
         Label queMuestra = new Label("Mostrando: todas las cartas");
@@ -52,7 +52,7 @@ public class Vista extends BorderPane {
         Label lblContador = new Label("34 / 283");
         lblContador.setStyle("-fx-text-fill: #e8e8e8; -fx-border-color: #333336; -fx-border-radius: 5; -fx-padding: 4 10;");
         encabezado.getChildren().addAll(queMuestra, spacer, lblContador);
-
+        // el carrusel de fotos de las cartas
         HBox carrusel = new HBox(20);
         carrusel.setAlignment(Pos.CENTER);
 
@@ -66,7 +66,7 @@ public class Vista extends BorderPane {
         Button botonSiguiente = new Button(">");
 
         carrusel.getChildren().addAll(botonAnterior, contenedorImagen, botonSiguiente);
-
+        // nombre y nivel de la carta
         VBox titulos = new VBox(10);
         titulos.setAlignment(Pos.CENTER);
         Label nombreCarta = new Label("Nombre de la carta");
@@ -74,7 +74,21 @@ public class Vista extends BorderPane {
         Label nivelCarta = new Label("Nivel X");
         nivelCarta.setStyle("-fx-background-color: #0d2a4a; -fx-text-fill: #5ba1f5; -fx-padding: 4 12; -fx-background-radius: 12; -fx-font-size: 12px;");
         titulos.getChildren().addAll(nombreCarta, nivelCarta);
-        panel.getChildren().addAll(encabezado, carrusel, titulos);
+
+        // stats de la carta
+        VBox stats = new VBox(20);
+        stats.setStyle("-fx-background-color: #1a1a1c; -fx-background-radius: 12; -fx-padding: 25;");
+        GridPane gridStats = new GridPane();
+        gridStats.setHgap(60);
+        gridStats.setVgap(15);
+        gridStats.add(new Label("Tipo: X"), 0, 0);
+        gridStats.add(new Label("Atributo: X"), 1, 0);
+        gridStats.add(new Label("Nivel: X"), 2, 0);
+        gridStats.add(new Label("Ataque: X"), 0, 1);
+        gridStats.add(new Label("Defensa: X"), 1, 1);
+        stats.getChildren().add(gridStats);
+        panel.getChildren().addAll(encabezado, carrusel, titulos, stats);
         return panel;
+
     }
 }
