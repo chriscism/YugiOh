@@ -1,4 +1,4 @@
-package vista;
+package com.example.practica5.vista;
 
 import javafx.scene.layout.BorderPane;
 
