@@ -56,6 +56,7 @@ public class Vista extends BorderPane {
         HBox carrusel = new HBox(20);
         carrusel.setAlignment(Pos.CENTER);
 
+        VBox miniaturaAnt = hacerCartaChiquitaMaqueta("Anterior");
         Button botonAnterior = new Button("<");
         StackPane contenedorImagen = new StackPane();
         contenedorImagen.setPrefSize(280, 400);
@@ -64,8 +65,9 @@ public class Vista extends BorderPane {
         lblPlaceholder.setStyle("-fx-text-fill: #8a8a8e;");
         contenedorImagen.getChildren().add(lblPlaceholder);
         Button botonSiguiente = new Button(">");
+        VBox miniaturaSig = hacerCartaChiquitaMaqueta("Siguiente");
 
-        carrusel.getChildren().addAll(botonAnterior, contenedorImagen, botonSiguiente);
+        carrusel.getChildren().addAll(miniaturaAnt,botonAnterior, contenedorImagen, botonSiguiente,miniaturaSig);
         // nombre y nivel de la carta
         VBox titulos = new VBox(10);
         titulos.setAlignment(Pos.CENTER);
@@ -91,5 +93,20 @@ public class Vista extends BorderPane {
         panel.getChildren().addAll(encabezado, carrusel, titulos, stats);
         return panel;
 
+    }
+
+    private VBox hacerCartaChiquitaMaqueta(String etiqueta) {
+        VBox vbox = new VBox(10);
+        vbox.setAlignment(Pos.CENTER);
+
+        StackPane rectangulo = new StackPane();
+        rectangulo.setPrefSize(70, 100);
+        rectangulo.setStyle("-fx-background-color: transparent; -fx-border-color: #333336; -fx-border-radius: 8;");
+
+        Label etiquetaRectangulo = new Label(etiqueta);
+        etiquetaRectangulo.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 11px;");
+
+        vbox.getChildren().addAll(rectangulo, etiquetaRectangulo);
+        return vbox;
     }
 }
