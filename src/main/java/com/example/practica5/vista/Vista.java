@@ -86,7 +86,8 @@ public class Vista extends BorderPane {
         gridStats.add(new Label("Nivel: X"), 2, 0);
         gridStats.add(new Label("Ataque: X"), 0, 1);
         gridStats.add(new Label("Defensa: X"), 1, 1);
-        stats.getChildren().add(gridStats);
+        VBox seccionEfecto = new VBox(new Label("Descripción: "), new Label("X"));
+        stats.getChildren().addAll(gridStats, seccionEfecto);
         panel.getChildren().addAll(encabezado, carrusel, titulos, stats);
         return panel;
 
