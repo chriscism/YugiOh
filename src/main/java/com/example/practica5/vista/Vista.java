@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 public class Vista extends BorderPane {
     public Vista(){
         this.setStyle("-fx-background-color: #161618;");
+        this.setLeft(crearMenuLateral());
     }
 
     private VBox crearMenuLateral(){
