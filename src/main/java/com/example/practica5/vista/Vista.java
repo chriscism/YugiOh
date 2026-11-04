@@ -10,6 +10,7 @@ public class Vista extends BorderPane {
     public Vista(){
         this.setStyle("-fx-background-color: #161618;");
         this.setLeft(crearMenuLateral());
+        this.setCenter(crearPanelCentral());
     }
 
     private VBox crearMenuLateral(){
@@ -73,7 +74,7 @@ public class Vista extends BorderPane {
         Label nivelCarta = new Label("Nivel X");
         nivelCarta.setStyle("-fx-background-color: #0d2a4a; -fx-text-fill: #5ba1f5; -fx-padding: 4 12; -fx-background-radius: 12; -fx-font-size: 12px;");
         titulos.getChildren().addAll(nombreCarta, nivelCarta);
-
+        panel.getChildren().addAll(encabezado, carrusel, titulos);
         return panel;
     }
 }
