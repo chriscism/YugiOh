@@ -28,11 +28,34 @@ public class Vista extends BorderPane {
     private Label lblValAtaque;
     private Label lblValDefensa;
     private Label lblValDescripcion;
+    public Button botonSonido;
 
     public Vista(){
         this.setStyle("-fx-background-color: #161618;");
         this.setLeft(crearMenuLateral());
-        this.setCenter(crearPanelCentral());
+        StackPane stack = new StackPane();
+        stack.getChildren().add(crearPanelCentral());
+        botonSonido = new Button();
+        try {
+            java.io.File archivoBocina = new java.io.File("src/main/resources/bocinita.png");
+            if (archivoBocina.exists()) {
+                javafx.scene.image.Image imgBocina = new javafx.scene.image.Image(archivoBocina.toURI().toString());
+                javafx.scene.image.ImageView vistaBocina = new javafx.scene.image.ImageView(imgBocina);
+                vistaBocina.setFitWidth(25);
+                vistaBocina.setFitHeight(25);
+                botonSonido.setGraphic(vistaBocina);
+            } else {
+                botonSonido.setText("🔊");
+                botonSonido.setStyle("-fx-text-fill: white; -fx-font-size: 18px;");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        botonSonido.setStyle("-fx-background-color: transparent; -fx-border-color: transparent transparent transparent;");
+        StackPane.setAlignment(botonSonido, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(botonSonido, new Insets(0, 30, 30, 0));
+        stack.getChildren().add(botonSonido);
+        this.setCenter(stack);
     }
 
     private VBox crearMenuLateral(){
@@ -51,9 +74,8 @@ public class Vista extends BorderPane {
         botonDefensa = botonDesplegable("Defense", "Low to High", "High to Low");
         Region espaciador = new Region();
         VBox.setVgrow(espaciador, Priority.ALWAYS);
-        Button botonBusqueda = new Button("Buscar...");
 
-        menu.getChildren().addAll(titulo, botonTodas, botonNivel, botonAtributo, botonAtaque, botonDefensa, botonBusqueda);
+        menu.getChildren().addAll(titulo, botonTodas, botonNivel, botonAtributo, botonAtaque, botonDefensa);
         return menu;
     }
 
@@ -67,7 +89,7 @@ public class Vista extends BorderPane {
         // encabezados
         HBox encabezado = new HBox();
         encabezado.setAlignment(Pos.CENTER_LEFT);
-        queMuestra = new Label("Mostrando: todas las cartas");
+        queMuestra = new Label("All cards");
         queMuestra.setStyle("-fx-text-fill: #e8e8e8;");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
