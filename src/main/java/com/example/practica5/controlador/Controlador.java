@@ -43,14 +43,14 @@ public class Controlador {
         listaSpell = new DoubleRoundList<>();
 
         llenarListas("src/main/java/com/example/practica5/modelo/yugioh_cards_cleaned_v4.csv");
-        IO.println(listaTodas.printAll());
+        IO.println(listaFire.printAll());
     }
 
     public void llenarListas(String ruta){
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;
             br.readLine();
-
+            int contadorDeCarta = 1;
             while ((linea = br.readLine()) != null) {
                 // regex para separar por comas e ignorar las comillas y/o comas del propio texto
                 String[] columnas = linea.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
@@ -79,7 +79,7 @@ public class Controlador {
                         }
 
                         // Se crea el objeto carta
-                        CartaYugioh carta = new CartaYugioh(nombre, atributo, nivel, ataque, defensa, descripcion);
+                        CartaYugioh carta = new CartaYugioh(nombre, atributo, nivel, ataque, defensa, descripcion, contadorDeCarta);
                         // lleno todas las listas, las que se necesite después se van a ordenar muajaja
                         listaTodas.insertEnd(carta);
                         listaPorNivelMenorMayor.insertEnd(carta);
@@ -99,6 +99,7 @@ public class Controlador {
                             case SPELL: listaSpell.insertEnd(carta); break;
                             case TRAP: listaTrap.insertEnd(carta); break;
                         }
+                        contadorDeCarta++;
                     } catch (IllegalArgumentException e) {
                         System.err.println("Fila omitida por error en el formato: " + columnas[0]);
                     }
