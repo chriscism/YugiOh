@@ -26,7 +26,9 @@ public class Controlador {
     private DoubleRoundList<CartaYugioh> listaTrap;
 
     public Controlador(){
-        crearListaTodas("File:src/main/java/com/example/practica5/modelo/yugioh_cards_cleaned_v4.csv");
+        listaTodas = new DoubleRoundList<>();
+        crearListaTodas("src/main/java/com/example/practica5/modelo/yugioh_cards_cleaned_v4.csv");
+        listaTodas.printAll();
     }
 
     public void crearListaTodas(String ruta){
@@ -42,9 +44,19 @@ public class Controlador {
                     try {
                         String nombre = columnas[0].trim();
                         Atributo atributo = Atributo.valueOf(columnas[1].trim().toUpperCase());
-                        int nivel = (int) Double.parseDouble(columnas[2].trim());
-                        int ataque = (int) Double.parseDouble(columnas[3].trim());
-                        int defensa = (int) Double.parseDouble(columnas[4].trim());
+                        // esto porque las cartas tipo spell, trap etc no tienen nivel ataque ni defensa y en el csv estan vacios
+                        int nivel = 0;
+                        if (!columnas[2].trim().isEmpty()) {
+                            nivel = (int) Double.parseDouble(columnas[2].trim());
+                        }
+                        int ataque = 0;
+                        if (!columnas[3].trim().isEmpty()) {
+                            ataque = (int) Double.parseDouble(columnas[3].trim());
+                        }
+                        int defensa = 0;
+                        if (!columnas[4].trim().isEmpty()) {
+                            defensa = (int) Double.parseDouble(columnas[4].trim());
+                        }
 
                         String descripcion = columnas[5].trim();
                         if (descripcion.startsWith("\"") && descripcion.endsWith("\"")) {
