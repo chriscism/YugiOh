@@ -1,0 +1,69 @@
+package com.example.practica5.controlador;
+
+import com.example.practica5.modelo.Atributo;
+import com.example.practica5.modelo.CartaYugioh;
+import com.example.practica5.modelo.DoubleRoundList;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Controlador {
+    private DoubleRoundList<CartaYugioh> listaTodas;
+    private DoubleRoundList<CartaYugioh> listaPorNivelMenorMayor;
+    private DoubleRoundList<CartaYugioh> listaPorNivelMayorMenor;
+    private DoubleRoundList<CartaYugioh> listaPorAtaqueMenorMayor;
+    private DoubleRoundList<CartaYugioh>  listaPorAtaqueMayorMenor;
+    private DoubleRoundList<CartaYugioh> listaPorDefensaMenorMayor;
+    private DoubleRoundList<CartaYugioh> listaPorDefensaMayorMenor;
+    private DoubleRoundList<CartaYugioh> listaDark;
+    private DoubleRoundList<CartaYugioh> listaLight;
+    private DoubleRoundList<CartaYugioh> listaEarth;
+    private DoubleRoundList<CartaYugioh> listaWater;
+    private DoubleRoundList<CartaYugioh> listaFire;
+    private DoubleRoundList<CartaYugioh> listaWind;
+    private DoubleRoundList<CartaYugioh> listaSpell;
+    private DoubleRoundList<CartaYugioh> listaTrap;
+
+    public Controlador(){
+        crearListaTodas("File:src/main/java/com/example/practica5/modelo/yugioh_cards_cleaned_v4.csv");
+    }
+
+    public void crearListaTodas(String ruta){
+        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
+            String linea;
+            br.readLine();
+
+            while ((linea = br.readLine()) != null) {
+                // regex para separar por comas e ignorar las comillas y/o comas del propio texto
+                String[] columnas = linea.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+                if (columnas.length >= 6) {
+                    try {
+                        String nombre = columnas[0].trim();
+                        Atributo atributo = Atributo.valueOf(columnas[1].trim().toUpperCase());
+                        int nivel = (int) Double.parseDouble(columnas[2].trim());
+                        int ataque = (int) Double.parseDouble(columnas[3].trim());
+                        int defensa = (int) Double.parseDouble(columnas[4].trim());
+
+                        String descripcion = columnas[5].trim();
+                        if (descripcion.startsWith("\"") && descripcion.endsWith("\"")) {
+                            descripcion = descripcion.substring(1, descripcion.length() - 1);
+                        }
+
+                        // Se crea el objeto carta
+                        CartaYugioh carta = new CartaYugioh(nombre, atributo, nivel, ataque, defensa, descripcion);
+
+                        // Se inserta en tu lista personalizada al final
+                        listaTodas.insertEnd(carta);
+
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Fila omitida por error en el formato: " + columnas[0]);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo CSV: " + e.getMessage());
+        }
+    }
+}
