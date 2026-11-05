@@ -69,4 +69,8 @@ public class CartaYugioh{
     public String toString(){
         return nombre + ", " + atributo;
     }
+
+    public int getNumCarta(){
+        return numCarta;
+    }
 }
