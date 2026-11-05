@@ -167,4 +167,30 @@ public class Controlador {
             System.out.println("Esa categoría no tiene cartas actualmente.");
         }
     }
+
+    private void configurarFiltros() {
+        //Botón de Todas las Cartas
+        vista.botonTodas.setOnAction(e -> aplicarFiltro(listaTodas, "All cards"));
+
+        // nivel
+        vista.botonNivel.getItems().get(0).setOnAction(e -> aplicarFiltro(listaPorNivelMenorMayor, "Level (lowest to highest)"));
+        vista.botonNivel.getItems().get(1).setOnAction(e -> aplicarFiltro(listaPorNivelMayorMenor, "Level (highest to lowest)"));
+
+        // ataque
+        vista.botonAtaque.getItems().get(0).setOnAction(e -> aplicarFiltro(listaPorAtaqueMenorMayor, "Attack (lowest to highest)"));
+        vista.botonAtaque.getItems().get(1).setOnAction(e -> aplicarFiltro(listaPorAtaqueMayorMenor, "Attack (highest to lowest)"));
+
+        // defensa
+        vista.botonDefensa.getItems().get(0).setOnAction(e -> aplicarFiltro(listaPorDefensaMenorMayor, "Defense (lowest to highest)"));
+        vista.botonDefensa.getItems().get(1).setOnAction(e -> aplicarFiltro(listaPorDefensaMayorMenor, "Defense (highest lo lowest)"));
+        // botones de atributo
+        vista.botonAtributo.getItems().get(0).setOnAction(e -> aplicarFiltro(listaDark, "Attribute: DARK"));
+        vista.botonAtributo.getItems().get(1).setOnAction(e -> aplicarFiltro(listaLight, "Attribute: LIGHT"));
+        vista.botonAtributo.getItems().get(2).setOnAction(e -> aplicarFiltro(listaEarth, "Attribute:  EARTH"));
+        vista.botonAtributo.getItems().get(3).setOnAction(e -> aplicarFiltro(listaFire, "Attribute: FIRE"));
+        vista.botonAtributo.getItems().get(4).setOnAction(e -> aplicarFiltro(listaWater, "Attribute: WATER"));
+        vista.botonAtributo.getItems().get(5).setOnAction(e -> aplicarFiltro(listaWind, "Attribute: WIND"));
+        vista.botonAtributo.getItems().get(6).setOnAction(e -> aplicarFiltro(listaSpell, "SPELL"));
+        vista.botonAtributo.getItems().get(7).setOnAction(e -> aplicarFiltro(listaTrap, "TRAP"));
+    }
 }
