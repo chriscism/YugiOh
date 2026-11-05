@@ -24,7 +24,7 @@ public class Vista extends BorderPane {
 
         Label titulo = new Label("Explore by: ");
         titulo.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 13px; -fx-padding: 0 0 10 0;");
-        Button botonTodas = new Button("All");
+        Button botonTodas = botonBonito("All", true);
         MenuButton botonNivel = botonDesplegable("Level", "Low to High", "High to Low");
         MenuButton botonAtributo = botonDesplegable("Attribute", "DARK", "LIGHT", "EARTH", "FIRE", "WATER", "WIND");
         MenuButton botonAtaque = botonDesplegable("Attack", "Low to High", "High to Low");
@@ -58,14 +58,14 @@ public class Vista extends BorderPane {
         carrusel.setAlignment(Pos.CENTER);
 
         VBox miniaturaAnt = hacerCartaChiquitaMaqueta("Anterior");
-        Button botonAnterior = new Button("<");
+        Button botonAnterior = flechaBonita("<");
         StackPane contenedorImagen = new StackPane();
         contenedorImagen.setPrefSize(280, 400);
         contenedorImagen.setStyle("-fx-background-color: #1a1a1c; -fx-border-color: #333336; -fx-border-radius: 12; -fx-background-radius: 12;");
         Label lblPlaceholder = new Label("Imagen de la carta");
         lblPlaceholder.setStyle("-fx-text-fill: #8a8a8e;");
         contenedorImagen.getChildren().add(lblPlaceholder);
-        Button botonSiguiente = new Button(">");
+        Button botonSiguiente = flechaBonita(">");
         VBox miniaturaSig = hacerCartaChiquitaMaqueta("Siguiente");
 
         carrusel.getChildren().addAll(miniaturaAnt,botonAnterior, contenedorImagen, botonSiguiente,miniaturaSig);
@@ -113,12 +113,30 @@ public class Vista extends BorderPane {
 
     private MenuButton botonDesplegable(String texto, String... opciones){
         MenuButton boton = new MenuButton(texto);
-       // boton.setMaxWidth(Double.MAX_VALUE);
-       // boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8e8e8; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
+       boton.setMaxWidth(Double.MAX_VALUE);
+       boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8e8e8; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
         for(String opc:opciones){
             MenuItem opcion = new MenuItem(opc);
             boton.getItems().add(opcion);
         }
         return boton;
+    }
+
+    private Button botonBonito(String texto, boolean activo) {
+        Button btn = new Button(texto);
+        btn.setMaxWidth(Double.MAX_VALUE);
+
+        if (activo) {
+            btn.setStyle("-fx-background-color: #0d2a4a; -fx-text-fill: #5ba1f5; -fx-alignment: BASELINE_LEFT; -fx-padding: 12 15; -fx-background-radius: 8; -fx-font-weight: bold;");
+        } else {
+            btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8e8e8; -fx-alignment: BASELINE_LEFT; -fx-padding: 12 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
+        }
+        return btn;
+    }
+
+    private Button flechaBonita(String texto) {
+        Button btn = new Button(texto);
+        btn.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: #333336; -fx-border-radius: 5; -fx-padding: 5 10; -fx-cursor: hand;");
+        return btn;
     }
 }
