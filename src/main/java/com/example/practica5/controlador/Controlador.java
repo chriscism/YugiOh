@@ -3,6 +3,7 @@ package com.example.practica5.controlador;
 import com.example.practica5.modelo.Atributo;
 import com.example.practica5.modelo.CartaYugioh;
 import com.example.practica5.modelo.DoubleRoundList;
+import com.example.practica5.vista.Vista;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,8 +25,13 @@ public class Controlador {
     private DoubleRoundList<CartaYugioh> listaWind;
     private DoubleRoundList<CartaYugioh> listaSpell;
     private DoubleRoundList<CartaYugioh> listaTrap;
+    private DoubleRoundList<CartaYugioh> listaActual;
+    private int indiceActual = 0;
+    private String titulo = "Mostrando: Todas las cartas";
+    private Vista vista;
 
-    public Controlador(){
+    public Controlador(Vista vista){
+        this.vista = vista;
         listaTodas = new DoubleRoundList<>();
         listaPorNivelMenorMayor = new DoubleRoundList<>();
         listaPorNivelMayorMenor = new DoubleRoundList<>();
@@ -43,8 +49,13 @@ public class Controlador {
         listaSpell = new DoubleRoundList<>();
 
         llenarListas("src/main/java/com/example/practica5/modelo/yugioh_cards_cleaned_v4.csv");
-        IO.println(listaFire.printAll());
+        ordenarListas();
+        listaActual = listaTodas;
+        configurarBotones();
+        actualizarPantalla();
     }
+
+
 
     public void llenarListas(String ruta){
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
@@ -118,5 +129,31 @@ public class Controlador {
         listaPorNivelMayorMenor.sort(CartaYugioh.compararNivel.reversed());
         listaPorAtaqueMayorMenor.sort(CartaYugioh.compararAtaque.reversed());
         listaPorDefensaMayorMenor.sort(CartaYugioh.compararDefensa.reversed());
+    }
+
+    private void configurarBotones() {
+        vista.botonSiguiente.setOnAction(e -> {
+            if (indiceActual < listaActual.getSize() - 1) {
+                indiceActual++;
+                actualizarPantalla();
+            }
+        });
+
+        vista.botonAnterior.setOnAction(e -> {
+            if (indiceActual > 0) {
+                indiceActual--;
+                actualizarPantalla();
+            }
+        });
+    }
+
+    private void actualizarPantalla() {
+        if (listaActual.getSize() == 0) return;
+
+        CartaYugioh actual = listaActual.get(indiceActual);
+        CartaYugioh anterior = (indiceActual > 0) ? listaActual.get(indiceActual - 1) : null;
+        CartaYugioh siguiente = (indiceActual < listaActual.getSize() - 1) ? listaActual.get(indiceActual + 1) : null;
+
+        vista.mostrarCarta(actual, anterior, siguiente, indiceActual, listaActual.getSize(), titulo);
     }
 }

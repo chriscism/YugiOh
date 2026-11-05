@@ -10,10 +10,24 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 
 public class Vista extends BorderPane {
-    Label queMuestra;
-    Label lblContador;
-    Label nombreCarta;
-    Label nivelCarta;
+    public Button botonAnterior;
+    public Button botonSiguiente;
+
+    private StackPane contenedorImagenCentral;
+    private StackPane contenedorMiniAnt;
+    private StackPane contenedorMiniSig;
+
+    private Label queMuestra;
+    private Label lblContador;
+    private Label nombreCarta;
+    private Label nivelCarta;
+
+    private Label lblValAtributo;
+    private Label lblValNivel;
+    private Label lblValAtaque;
+    private Label lblValDefensa;
+    private Label lblValDescripcion;
+
     public Vista(){
         this.setStyle("-fx-background-color: #161618;");
         this.setLeft(crearMenuLateral());
@@ -48,6 +62,7 @@ public class Vista extends BorderPane {
         panel.setSpacing(25);
         panel.setAlignment(Pos.TOP_CENTER);
         panel.setStyle("-fx-background-color: transparent;");
+
         // encabezados
         HBox encabezado = new HBox();
         encabezado.setAlignment(Pos.CENTER_LEFT);
@@ -55,23 +70,29 @@ public class Vista extends BorderPane {
         queMuestra.setStyle("-fx-text-fill: #e8e8e8;");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        lblContador = new Label("34 / 283");
+        lblContador = new Label("1 / 283");
         lblContador.setStyle("-fx-text-fill: #e8e8e8; -fx-border-color: #333336; -fx-border-radius: 5; -fx-padding: 4 10;");
         encabezado.getChildren().addAll(queMuestra, spacer, lblContador);
-        // el carrusel de fotos de las cartas
+
+        // carrusel
         HBox carrusel = new HBox(20);
         carrusel.setAlignment(Pos.CENTER);
 
-        VBox miniaturaAnt = hacerCartaChiquitaMaqueta("Anterior");
-        Button botonAnterior = flechaBonita("<");
-        StackPane contenedorImagen = new StackPane();
-        contenedorImagen.setPrefSize(280, 400);
-        contenedorImagen.setStyle("-fx-background-color: #1a1a1c; -fx-border-color: #333336; -fx-border-radius: 12; -fx-background-radius: 12;");
-        Button botonSiguiente = flechaBonita(">");
-        VBox miniaturaSig = hacerCartaChiquitaMaqueta("Siguiente");
+        VBox miniaturaAntLayout = hacerCartaChiquitaMaqueta("Anterior");
+        contenedorMiniAnt = (StackPane) miniaturaAntLayout.getChildren().get(0);
+        botonAnterior = flechaBonita("<");
 
-        carrusel.getChildren().addAll(miniaturaAnt,botonAnterior, contenedorImagen, botonSiguiente,miniaturaSig);
-        // nombre y nivel de la carta
+        contenedorImagenCentral = new StackPane();
+        contenedorImagenCentral.setPrefSize(280, 400);
+        contenedorImagenCentral.setStyle("-fx-background-color: #1a1a1c; -fx-border-color: #333336; -fx-border-radius: 12; -fx-background-radius: 12;");
+
+        botonSiguiente = flechaBonita(">");
+        VBox miniaturaSigLayout = hacerCartaChiquitaMaqueta("Siguiente");
+        contenedorMiniSig = (StackPane) miniaturaSigLayout.getChildren().get(0);
+
+        carrusel.getChildren().addAll(miniaturaAntLayout, botonAnterior, contenedorImagenCentral, botonSiguiente, miniaturaSigLayout);
+
+        // nombre y nivel
         VBox titulos = new VBox(10);
         titulos.setAlignment(Pos.CENTER);
         nombreCarta = new Label("Nombre de la carta");
@@ -80,46 +101,63 @@ public class Vista extends BorderPane {
         nivelCarta.setStyle("-fx-background-color: #0d2a4a; -fx-text-fill: #5ba1f5; -fx-padding: 4 12; -fx-background-radius: 12; -fx-font-size: 12px;");
         titulos.getChildren().addAll(nombreCarta, nivelCarta);
 
-        // stats de la carta
+        // stats
         VBox stats = new VBox(20);
         stats.setStyle("-fx-background-color: #1a1a1c; -fx-background-radius: 12; -fx-padding: 25;");
         GridPane gridStats = new GridPane();
         gridStats.setHgap(60);
         gridStats.setVgap(15);
-        gridStats.add(new Label("Tipo: X"), 0, 0);
-        gridStats.add(new Label("Atributo: X"), 1, 0);
-        gridStats.add(new Label("Nivel: X"), 2, 0);
-        gridStats.add(new Label("Ataque: X"), 0, 1);
-        gridStats.add(new Label("Defensa: X"), 1, 1);
-        VBox seccionEfecto = new VBox(new Label("Descripción: "), new Label("X"));
+
+        lblValAtributo = crearLabelValor("X");
+        lblValNivel = crearLabelValor("X");
+        lblValAtaque = crearLabelValor("X");
+        lblValDefensa = crearLabelValor("X");
+
+        gridStats.add(panelDeDatosConLabel("Atributo: ", lblValAtributo), 0, 0);
+        gridStats.add(panelDeDatosConLabel("Nivel: ", lblValNivel), 1, 0);
+        gridStats.add(panelDeDatosConLabel("Ataque: ", lblValAtaque), 2, 0);
+        gridStats.add(panelDeDatosConLabel("Defensa: ", lblValDefensa), 0, 1);
+
+        lblValDescripcion = crearLabelValor("X");
+        VBox seccionEfecto = panelDeDatosConLabel("Descripción: ", lblValDescripcion);
+
         stats.getChildren().addAll(gridStats, seccionEfecto);
         panel.getChildren().addAll(encabezado, carrusel, titulos, stats);
         return panel;
-
     }
 
     private VBox hacerCartaChiquitaMaqueta(String etiqueta) {
         VBox vbox = new VBox(10);
         vbox.setAlignment(Pos.CENTER);
-
         StackPane rectangulo = new StackPane();
         rectangulo.setPrefSize(70, 100);
         rectangulo.setStyle("-fx-background-color: transparent; -fx-border-color: #333336; -fx-border-radius: 8;");
-
         Label etiquetaRectangulo = new Label(etiqueta);
         etiquetaRectangulo.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 11px;");
-
         vbox.getChildren().addAll(rectangulo, etiquetaRectangulo);
+        return vbox;
+    }
+
+    private Label crearLabelValor(String valor) {
+        Label lbl = new Label(valor);
+        lbl.setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        return lbl;
+    }
+
+    private VBox panelDeDatosConLabel(String etiqueta, Label lblVal) {
+        VBox vbox = new VBox(3);
+        Label lblEtiq = new Label(etiqueta);
+        lblEtiq.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 12px;");
+        vbox.getChildren().addAll(lblEtiq, lblVal);
         return vbox;
     }
 
     private MenuButton botonDesplegable(String texto, String... opciones){
         MenuButton boton = new MenuButton(texto);
-       boton.setMaxWidth(Double.MAX_VALUE);
-       boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8e8e8; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
+        boton.setMaxWidth(Double.MAX_VALUE);
+        boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8e8e8; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
         for(String opc:opciones){
-            MenuItem opcion = new MenuItem(opc);
-            boton.getItems().add(opcion);
+            boton.getItems().add(new MenuItem(opc));
         }
         return boton;
     }
@@ -127,7 +165,6 @@ public class Vista extends BorderPane {
     private Button botonBonito(String texto, boolean activo) {
         Button btn = new Button(texto);
         btn.setMaxWidth(Double.MAX_VALUE);
-
         if (activo) {
             btn.setStyle("-fx-background-color: #0d2a4a; -fx-text-fill: #5ba1f5; -fx-alignment: BASELINE_LEFT; -fx-padding: 12 15; -fx-background-radius: 8; -fx-font-weight: bold;");
         } else {
@@ -142,10 +179,40 @@ public class Vista extends BorderPane {
         return btn;
     }
 
-    public void mostrarCartas(CartaYugioh actual, CartaYugioh anterior, CartaYugioh siguiente, int indice, int total){
-        nombreCarta.setText(actual.getNombre());
-        nivelCarta.setText("Nivel " + actual.getNivel());
-        lblContador.setText(actual.getNumCarta() + "/283");
+    public void mostrarCarta(CartaYugioh actual, CartaYugioh anterior, CartaYugioh siguiente, int indice, int total, String tituloVista) {
+        if (actual == null) return;
 
+        // Actualizar textos
+        queMuestra.setText(tituloVista);
+        lblContador.setText((indice + 1) + " / " + total);
+
+        nombreCarta.setText(actual.getNombre());
+        nivelCarta.setText(actual.getAtributo().name().equals("SPELL") || actual.getAtributo().name().equals("TRAP") ? "N/A" : "Nivel " + actual.getNivel());
+
+        lblValAtributo.setText(actual.getAtributo().name());
+        lblValNivel.setText(String.valueOf(actual.getNivel()));
+        lblValAtaque.setText(String.valueOf(actual.getAtaque()));
+        lblValDefensa.setText(String.valueOf(actual.getDefensa()));
+        lblValDescripcion.setText(actual.getDescripcion());
+
+        // Actualizar imagenes de las cartitas
+        contenedorImagenCentral.getChildren().clear();
+        contenedorImagenCentral.getChildren().add(CartaVisual.crearCartaVisual(actual, 280, 400));
+
+        contenedorMiniAnt.getChildren().clear();
+        if (anterior != null) {
+            contenedorMiniAnt.getChildren().add(CartaVisual.crearCartaVisual(anterior, 70, 100));
+            botonAnterior.setDisable(false);
+        } else {
+            botonAnterior.setDisable(true);
+        }
+
+        contenedorMiniSig.getChildren().clear();
+        if (siguiente != null) {
+            contenedorMiniSig.getChildren().add(CartaVisual.crearCartaVisual(siguiente, 70, 100));
+            botonSiguiente.setDisable(false);
+        } else {
+            botonSiguiente.setDisable(true);
+        }
     }
 }

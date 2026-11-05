@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 
 public class CartaVisual {
-    private static final String rutaFotos = "src/main/resources/imagenes_lata_25_aniversario_yugipedia";
+    private static final String rutaFotos = "src/main/resources/imagenes_lata_25_aniversario_yugipedia/";
 
     public static ImageView crearCartaVisual(CartaYugioh carta, double x, double y) {
         ImageView foto = new ImageView();
