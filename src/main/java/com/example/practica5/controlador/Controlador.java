@@ -52,6 +52,7 @@ public class Controlador {
         ordenarListas();
         listaActual = listaTodas;
         configurarBotones();
+        configurarFiltros();
         actualizarPantalla();
     }
 

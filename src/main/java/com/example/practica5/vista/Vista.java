@@ -114,13 +114,13 @@ public class Vista extends BorderPane {
         lblValAtaque = crearLabelValor("X");
         lblValDefensa = crearLabelValor("X");
 
-        gridStats.add(panelDeDatosConLabel("Atributo: ", lblValAtributo), 0, 0);
-        gridStats.add(panelDeDatosConLabel("Nivel: ", lblValNivel), 1, 0);
-        gridStats.add(panelDeDatosConLabel("Ataque: ", lblValAtaque), 2, 0);
-        gridStats.add(panelDeDatosConLabel("Defensa: ", lblValDefensa), 0, 1);
+        gridStats.add(panelDeDatosConLabel("Attribute: ", lblValAtributo), 0, 0);
+        gridStats.add(panelDeDatosConLabel("Level: ", lblValNivel), 1, 0);
+        gridStats.add(panelDeDatosConLabel("Attack: ", lblValAtaque), 2, 0);
+        gridStats.add(panelDeDatosConLabel("Defense: ", lblValDefensa), 0, 1);
 
         lblValDescripcion = crearLabelValor("X");
-        VBox seccionEfecto = panelDeDatosConLabel("Descripción: ", lblValDescripcion);
+        VBox seccionEfecto = panelDeDatosConLabel("Description: ", lblValDescripcion);
 
         stats.getChildren().addAll(gridStats, seccionEfecto);
         ScrollPane statsScrolleables = new ScrollPane(stats);
@@ -193,7 +193,7 @@ public class Vista extends BorderPane {
         lblContador.setText((indice + 1) + " / " + total);
 
         nombreCarta.setText(actual.getNombre());
-        nivelCarta.setText(actual.getAtributo().name().equals("SPELL") || actual.getAtributo().name().equals("TRAP") ? "N/A" : "Nivel " + actual.getNivel());
+        nivelCarta.setText(actual.getAtributo().name().equals("SPELL") || actual.getAtributo().name().equals("TRAP") ? "N/A" : "Level " + actual.getNivel());
 
         lblValAtributo.setText(actual.getAtributo().name());
         lblValNivel.setText(String.valueOf(actual.getNivel()));
