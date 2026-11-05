@@ -6,6 +6,8 @@ import com.example.practica5.modelo.DoubleRoundList;
 import com.example.practica5.vista.Vista;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +34,8 @@ public class Controlador {
     private int indiceActual = 0;
     private String titulo = "All cards";
     private Vista vista;
-    private boolean bocinitaSilenciada = true;
+    private boolean bocinitaSilenciada = false;
+    private MediaPlayer reproductor;
 
     public Controlador(Vista vista){
         this.vista = vista;
@@ -58,6 +61,7 @@ public class Controlador {
         configurarBotones();
         configurarFiltros();
         actualizarPantalla();
+        iniciarMusica();
     }
 
 
@@ -155,6 +159,9 @@ public class Controlador {
             bocinitaSilenciada = !bocinitaSilenciada; // Invertimos el estado (de falso a verdadero y viceversa)
 
             if (bocinitaSilenciada) {
+                if (reproductor != null) {
+                    reproductor.pause();
+                }
                 File archivoBocina = new java.io.File("src/main/resources/bocinitaSilencio.png");
                 if (archivoBocina.exists()) {
                     Image imgBocina = new Image(archivoBocina.toURI().toString());
@@ -164,6 +171,9 @@ public class Controlador {
                     vista.botonSonido.setGraphic(vistaBocina);
                 }
             } else {
+                if (reproductor != null) {
+                    reproductor.play();
+                }
                 File archivoBocina = new java.io.File("src/main/resources/bocinita.png");
                 if (archivoBocina.exists()) {
                     Image imgBocina = new Image(archivoBocina.toURI().toString());
@@ -221,5 +231,26 @@ public class Controlador {
         vista.botonAtributo.getItems().get(5).setOnAction(e -> aplicarFiltro(listaWind, "Attribute: WIND"));
         vista.botonAtributo.getItems().get(6).setOnAction(e -> aplicarFiltro(listaSpell, "SPELL"));
         vista.botonAtributo.getItems().get(7).setOnAction(e -> aplicarFiltro(listaTrap, "TRAP"));
+    }
+
+    private void iniciarMusica() {
+        try {
+            File archivoMusica = new File("src/main/resources/Yugioh OST 98 Duel of Friendship.mp3");
+
+            if (archivoMusica.exists()) {
+                Media media = new Media(archivoMusica.toURI().toString());
+                reproductor = new MediaPlayer(media);
+                reproductor.setVolume(0.5);
+                reproductor.setCycleCount(MediaPlayer.INDEFINITE); // Repetir infinitamente
+
+                if (!bocinitaSilenciada) {
+                    reproductor.play();
+                }
+            } else {
+                System.out.println("No se encontró el archivo de música en: " + archivoMusica.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar la música: " + e.getMessage());
+        }
     }
 }
