@@ -9,7 +9,11 @@ import javafx.scene.layout.*;
 public class Vista extends BorderPane {
     public Button botonAnterior;
     public Button botonSiguiente;
-
+    public Button botonTodas;
+    public MenuButton botonNivel;
+    public MenuButton botonAtributo;
+    public MenuButton botonAtaque;
+    public MenuButton botonDefensa;
     private StackPane contenedorImagenCentral;
     private StackPane contenedorMiniAnt;
     private StackPane contenedorMiniSig;
@@ -40,11 +44,11 @@ public class Vista extends BorderPane {
 
         Label titulo = new Label("Explore by: ");
         titulo.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 13px; -fx-padding: 0 0 10 0;");
-        Button botonTodas = botonBonito("All", true);
-        MenuButton botonNivel = botonDesplegable("Level", "Low to High", "High to Low");
-        MenuButton botonAtributo = botonDesplegable("Attribute", "DARK", "LIGHT", "EARTH", "FIRE", "WATER", "WIND");
-        MenuButton botonAtaque = botonDesplegable("Attack", "Low to High", "High to Low");
-        MenuButton botonDefensa = botonDesplegable("Defense", "Low to High", "High to Low");
+        botonTodas = botonBonito("All", true);
+        botonNivel = botonDesplegable("Level", "Low to High", "High to Low");
+        botonAtributo = botonDesplegable("Attribute", "DARK", "LIGHT", "EARTH", "FIRE", "WATER", "WIND", "SPELL", "TRAP");
+        botonAtaque = botonDesplegable("Attack", "Low to High", "High to Low");
+        botonDefensa = botonDesplegable("Defense", "Low to High", "High to Low");
         Region espaciador = new Region();
         VBox.setVgrow(espaciador, Priority.ALWAYS);
         Button botonBusqueda = new Button("Buscar...");
