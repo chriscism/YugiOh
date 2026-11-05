@@ -9,6 +9,7 @@ public class CartaYugioh{
     private int ataque;
     private int defensa;
     private String descripcion;
+    private int numCarta;
 
 
     public static final Comparator<CartaYugioh> compararNivel = new Comparator<CartaYugioh>() {
@@ -31,13 +32,14 @@ public class CartaYugioh{
             return Integer.compare(c1.getDefensa(), c2.getDefensa());
         }
     };
-    public CartaYugioh(String nombre, Atributo atributo, int nivel, int ataque, int defensa, String descripcion) {
+    public CartaYugioh(String nombre, Atributo atributo, int nivel, int ataque, int defensa, String descripcion, int numCarta) {
         this.nombre = nombre;
         this.atributo = atributo;
         this.nivel = nivel;
         this.ataque = ataque;
         this.defensa = defensa;
         this.descripcion = descripcion;
+        this.numCarta = numCarta;
     }
 
     public String getDescripcion() {
@@ -65,6 +67,6 @@ public class CartaYugioh{
     }
 
     public String toString(){
-        return nombre;
+        return nombre + ", " + atributo;
     }
 }
