@@ -27,11 +27,26 @@ public class Controlador {
 
     public Controlador(){
         listaTodas = new DoubleRoundList<>();
-        crearListaTodas("src/main/java/com/example/practica5/modelo/yugioh_cards_cleaned_v4.csv");
-        listaTodas.printAll();
+        listaPorNivelMenorMayor = new DoubleRoundList<>();
+        listaPorNivelMayorMenor = new DoubleRoundList<>();
+        listaPorAtaqueMenorMayor = new DoubleRoundList<>();
+        listaPorAtaqueMayorMenor = new DoubleRoundList<>();
+        listaPorDefensaMenorMayor = new DoubleRoundList<>();
+        listaPorDefensaMayorMenor = new DoubleRoundList<>();
+        listaDark = new DoubleRoundList<>();
+        listaLight = new DoubleRoundList<>();
+        listaEarth = new DoubleRoundList<>();
+        listaWater = new DoubleRoundList<>();
+        listaFire = new DoubleRoundList<>();
+        listaWind = new DoubleRoundList<>();
+        listaTrap = new DoubleRoundList<>();
+        listaSpell = new DoubleRoundList<>();
+
+        llenarListas("src/main/java/com/example/practica5/modelo/yugioh_cards_cleaned_v4.csv");
+        IO.println(listaTodas.printAll());
     }
 
-    public void crearListaTodas(String ruta){
+    public void llenarListas(String ruta){
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;
             br.readLine();
@@ -65,10 +80,25 @@ public class Controlador {
 
                         // Se crea el objeto carta
                         CartaYugioh carta = new CartaYugioh(nombre, atributo, nivel, ataque, defensa, descripcion);
-
-                        // Se inserta en tu lista personalizada al final
+                        // lleno todas las listas, las que se necesite después se van a ordenar muajaja
                         listaTodas.insertEnd(carta);
-
+                        listaPorNivelMenorMayor.insertEnd(carta);
+                        listaPorNivelMayorMenor.insertEnd(carta);
+                        listaPorAtaqueMenorMayor.insertEnd(carta);
+                        listaPorAtaqueMayorMenor.insertEnd(carta);
+                        listaPorDefensaMenorMayor.insertEnd(carta);
+                        listaPorDefensaMayorMenor.insertEnd(carta);
+                        // aqui la meto en la lista que es según el atributo que tenga
+                        switch (atributo) {
+                            case DARK: listaDark.insertEnd(carta); break;
+                            case LIGHT: listaLight.insertEnd(carta); break;
+                            case EARTH: listaEarth.insertEnd(carta); break;
+                            case WATER: listaWater.insertEnd(carta); break;
+                            case FIRE: listaFire.insertEnd(carta); break;
+                            case WIND: listaWind.insertEnd(carta); break;
+                            case SPELL: listaSpell.insertEnd(carta); break;
+                            case TRAP: listaTrap.insertEnd(carta); break;
+                        }
                     } catch (IllegalArgumentException e) {
                         System.err.println("Fila omitida por error en el formato: " + columnas[0]);
                     }
@@ -77,5 +107,15 @@ public class Controlador {
         } catch (IOException e) {
             System.err.println("Error al leer el archivo CSV: " + e.getMessage());
         }
+    }
+
+    public void ordenarListas(){
+        listaPorNivelMenorMayor.sort(CartaYugioh.compararNivel);
+        listaPorAtaqueMenorMayor.sort(CartaYugioh.compararAtaque);
+        listaPorDefensaMenorMayor.sort(CartaYugioh.compararDefensa);
+        // las revierto para que sea en orden descendente
+        listaPorNivelMayorMenor.sort(CartaYugioh.compararNivel.reversed());
+        listaPorAtaqueMayorMenor.sort(CartaYugioh.compararAtaque.reversed());
+        listaPorDefensaMayorMenor.sort(CartaYugioh.compararDefensa.reversed());
     }
 }
