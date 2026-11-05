@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 
 public class Vista extends BorderPane {
@@ -20,14 +22,13 @@ public class Vista extends BorderPane {
         menu.setPrefWidth(220);
         menu.setStyle("-fx-background-color: #1a1a1c; -fx-border-color: transparent #2a2a2d transparent transparent;");
 
-        Label titulo = new Label("Explorar por: ");
+        Label titulo = new Label("Explore by: ");
         titulo.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 13px; -fx-padding: 0 0 10 0;");
-        Button botonTodas = new Button("Todas");
-        Button botonNivel = new Button("Nivel");
-        Button botonAtributo = new Button("Atributo");
-        Button botonAtaque = new Button("Ataque");
-        Button botonDefensa = new Button("Defensa");
-
+        Button botonTodas = new Button("All");
+        MenuButton botonNivel = botonDesplegable("Level", "Low to High", "High to Low");
+        MenuButton botonAtributo = botonDesplegable("Attribute", "DARK", "LIGHT", "EARTH", "FIRE", "WATER", "WIND");
+        MenuButton botonAtaque = botonDesplegable("Attack", "Low to High", "High to Low");
+        MenuButton botonDefensa = botonDesplegable("Defense", "Low to High", "High to Low");
         Region espaciador = new Region();
         VBox.setVgrow(espaciador, Priority.ALWAYS);
         Button botonBusqueda = new Button("Buscar...");
@@ -108,5 +109,16 @@ public class Vista extends BorderPane {
 
         vbox.getChildren().addAll(rectangulo, etiquetaRectangulo);
         return vbox;
+    }
+
+    private MenuButton botonDesplegable(String texto, String... opciones){
+        MenuButton boton = new MenuButton(texto);
+       // boton.setMaxWidth(Double.MAX_VALUE);
+       // boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8e8e8; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
+        for(String opc:opciones){
+            MenuItem opcion = new MenuItem(opc);
+            boton.getItems().add(opcion);
+        }
+        return boton;
     }
 }
