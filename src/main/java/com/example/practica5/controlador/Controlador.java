@@ -156,4 +156,15 @@ public class Controlador {
 
         vista.mostrarCarta(actual, anterior, siguiente, indiceActual, listaActual.getSize(), titulo);
     }
+
+    private void aplicarFiltro(DoubleRoundList<CartaYugioh> nuevaLista, String nuevoTitulo) {
+        if (nuevaLista != null && nuevaLista.getSize() > 0) {
+            this.listaActual = nuevaLista;
+            this.indiceActual = 0;
+            this.titulo = nuevoTitulo;
+            actualizarPantalla();
+        } else {
+            System.out.println("Esa categoría no tiene cartas actualmente.");
+        }
+    }
 }
