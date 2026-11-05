@@ -163,4 +163,27 @@ public class DoubleRoundList<T> {
             r = r.getNext();
         }while (r != begin);
     }
+
+    public int getSize() {
+        if (begin == null) return 0;
+        int count = 0;
+        DoubleNode r = begin;
+        do {
+            count++;
+            r = r.getNext();
+        } while (r != begin);
+        return count;
+    }
+
+    public T get(int pos) {
+        if (begin == null || pos < 0) return null;
+        DoubleNode r = begin;
+        int count = 0;
+        do {
+            if (count == pos) return (T) r.getData();
+            count++;
+            r = r.getNext();
+        } while (r != begin);
+        return null;
+    }
 }
