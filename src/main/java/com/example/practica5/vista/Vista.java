@@ -7,6 +7,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 import java.io.File;
 
@@ -35,6 +38,23 @@ public class Vista extends StackPane {
     public Button botonSonido;
 
     public Vista(){
+        MediaView fondoVideo = new MediaView();
+        try {
+            File archivoVideo = new File("src/main/resources/videoplayback.mp4");
+            if (archivoVideo.exists()) {
+                Media mediaVideo = new Media(archivoVideo.toURI().toString());
+                MediaPlayer reproductorVideo = new MediaPlayer(mediaVideo);
+
+                fondoVideo.setMediaPlayer(reproductorVideo);
+                fondoVideo.fitWidthProperty().bind(this.widthProperty());
+                fondoVideo.fitHeightProperty().bind(this.heightProperty());
+                fondoVideo.setPreserveRatio(false);
+
+                reproductorVideo.play();
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar el video de fondo: " + e.getMessage());
+        }
         BorderPane interfaz = new BorderPane();
         interfaz.setStyle("-fx-background-color: transparent;");
         interfaz.setLeft(crearMenuLateral());
@@ -62,7 +82,7 @@ public class Vista extends StackPane {
         StackPane.setMargin(botonSonido, new Insets(0, 30, 30, 0));
         stack.getChildren().add(botonSonido);
         interfaz.setCenter(stack);
-        this.getChildren().add(interfaz);
+        this.getChildren().addAll(fondoVideo, interfaz);
     }
 
     private VBox crearMenuLateral(){
@@ -133,8 +153,7 @@ public class Vista extends StackPane {
 
         // stats
         VBox stats = new VBox(20);
-        stats.setStyle("-fx-background-color: #1a1a1c; -fx-background-radius: 12; -fx-padding: 25;");
-        GridPane gridStats = new GridPane();
+        stats.setStyle("-fx-background-color: #1a1a1ccc; -fx-background-radius: 12; -fx-padding: 25;");        GridPane gridStats = new GridPane();
         gridStats.setHgap(60);
         gridStats.setVgap(15);
 
