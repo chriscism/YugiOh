@@ -3,10 +3,7 @@ package com.example.practica5.vista;
 import com.example.practica5.modelo.CartaYugioh;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class Vista extends BorderPane {
@@ -31,7 +28,11 @@ public class Vista extends BorderPane {
     public Vista(){
         this.setStyle("-fx-background-color: #161618;");
         this.setLeft(crearMenuLateral());
-        this.setCenter(crearPanelCentral());
+        ScrollPane scrolleable = new ScrollPane();
+        scrolleable.setContent(crearPanelCentral());
+        scrolleable.setFitToWidth(true);
+        scrolleable.setStyle("-fx-background: #161618; -fx-border-color: transparent;");
+        this.setCenter(scrolleable);
     }
 
     private VBox crearMenuLateral(){
