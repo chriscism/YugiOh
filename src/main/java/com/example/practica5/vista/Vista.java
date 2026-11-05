@@ -28,11 +28,7 @@ public class Vista extends BorderPane {
     public Vista(){
         this.setStyle("-fx-background-color: #161618;");
         this.setLeft(crearMenuLateral());
-        ScrollPane scrolleable = new ScrollPane();
-        scrolleable.setContent(crearPanelCentral());
-        scrolleable.setFitToWidth(true);
-        scrolleable.setStyle("-fx-background: #161618; -fx-border-color: transparent;");
-        this.setCenter(scrolleable);
+        this.setCenter(crearPanelCentral());
     }
 
     private VBox crearMenuLateral(){
@@ -123,7 +119,11 @@ public class Vista extends BorderPane {
         VBox seccionEfecto = panelDeDatosConLabel("Descripción: ", lblValDescripcion);
 
         stats.getChildren().addAll(gridStats, seccionEfecto);
-        panel.getChildren().addAll(encabezado, carrusel, titulos, stats);
+        ScrollPane statsScrolleables = new ScrollPane(stats);
+        statsScrolleables.setFitToWidth(true);
+        statsScrolleables.setStyle("-fx-background: #161618; -fx-background-color: transparent; -fx-border-color: transparent;");
+        VBox.setVgrow(statsScrolleables, Priority.ALWAYS);
+        panel.getChildren().addAll(encabezado, carrusel, titulos, statsScrolleables);
         return panel;
     }
 
@@ -141,7 +141,8 @@ public class Vista extends BorderPane {
 
     private Label crearLabelValor(String valor) {
         Label lbl = new Label(valor);
-        lbl.setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;");
+        lbl.setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;");
+        lbl.setWrapText(true);
         return lbl;
     }
 
