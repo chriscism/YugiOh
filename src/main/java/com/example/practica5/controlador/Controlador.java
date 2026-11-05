@@ -4,8 +4,11 @@ import com.example.practica5.modelo.Atributo;
 import com.example.practica5.modelo.CartaYugioh;
 import com.example.practica5.modelo.DoubleRoundList;
 import com.example.practica5.vista.Vista;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -27,8 +30,9 @@ public class Controlador {
     private DoubleRoundList<CartaYugioh> listaTrap;
     private DoubleRoundList<CartaYugioh> listaActual;
     private int indiceActual = 0;
-    private String titulo = "Mostrando: Todas las cartas";
+    private String titulo = "All cards";
     private Vista vista;
+    private boolean bocinitaSilenciada = true;
 
     public Controlador(Vista vista){
         this.vista = vista;
@@ -144,6 +148,30 @@ public class Controlador {
             if (indiceActual > 0) {
                 indiceActual--;
                 actualizarPantalla();
+            }
+        });
+
+        vista.botonSonido.setOnAction(e -> {
+            bocinitaSilenciada = !bocinitaSilenciada; // Invertimos el estado (de falso a verdadero y viceversa)
+
+            if (bocinitaSilenciada) {
+                File archivoBocina = new java.io.File("src/main/resources/bocinitaSilencio.png");
+                if (archivoBocina.exists()) {
+                    Image imgBocina = new Image(archivoBocina.toURI().toString());
+                    ImageView vistaBocina = new ImageView(imgBocina);
+                    vistaBocina.setFitWidth(25);
+                    vistaBocina.setFitHeight(25);
+                    vista.botonSonido.setGraphic(vistaBocina);
+                }
+            } else {
+                File archivoBocina = new java.io.File("src/main/resources/bocinita.png");
+                if (archivoBocina.exists()) {
+                    Image imgBocina = new Image(archivoBocina.toURI().toString());
+                    ImageView vistaBocina = new ImageView(imgBocina);
+                    vistaBocina.setFitWidth(25);
+                    vistaBocina.setFitHeight(25);
+                   vista.botonSonido.setGraphic(vistaBocina);
+                }
             }
         });
     }

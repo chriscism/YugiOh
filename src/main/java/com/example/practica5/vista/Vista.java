@@ -4,7 +4,11 @@ import com.example.practica5.modelo.CartaYugioh;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
+import java.io.File;
 
 public class Vista extends BorderPane {
     public Button botonAnterior;
@@ -36,11 +40,12 @@ public class Vista extends BorderPane {
         StackPane stack = new StackPane();
         stack.getChildren().add(crearPanelCentral());
         botonSonido = new Button();
+        botonSonido.setMaxSize(100, 100);
         try {
-            java.io.File archivoBocina = new java.io.File("src/main/resources/bocinita.png");
+            File archivoBocina = new java.io.File("src/main/resources/bocinita.png");
             if (archivoBocina.exists()) {
-                javafx.scene.image.Image imgBocina = new javafx.scene.image.Image(archivoBocina.toURI().toString());
-                javafx.scene.image.ImageView vistaBocina = new javafx.scene.image.ImageView(imgBocina);
+                Image imgBocina = new Image(archivoBocina.toURI().toString());
+                ImageView vistaBocina = new ImageView(imgBocina);
                 vistaBocina.setFitWidth(25);
                 vistaBocina.setFitHeight(25);
                 botonSonido.setGraphic(vistaBocina);
@@ -52,7 +57,7 @@ public class Vista extends BorderPane {
             e.printStackTrace();
         }
         botonSonido.setStyle("-fx-background-color: transparent; -fx-border-color: transparent transparent transparent;");
-        StackPane.setAlignment(botonSonido, Pos.BOTTOM_RIGHT);
+        StackPane.setAlignment(botonSonido, Pos.TOP_RIGHT);
         StackPane.setMargin(botonSonido, new Insets(0, 30, 30, 0));
         stack.getChildren().add(botonSonido);
         this.setCenter(stack);
@@ -101,7 +106,7 @@ public class Vista extends BorderPane {
         HBox carrusel = new HBox(20);
         carrusel.setAlignment(Pos.CENTER);
 
-        VBox miniaturaAntLayout = hacerCartaChiquitaMaqueta("Anterior");
+        VBox miniaturaAntLayout = hacerCartaChiquitaMaqueta();
         contenedorMiniAnt = (StackPane) miniaturaAntLayout.getChildren().get(0);
         botonAnterior = flechaBonita("<");
 
@@ -110,7 +115,7 @@ public class Vista extends BorderPane {
         contenedorImagenCentral.setStyle("-fx-background-color: #1a1a1c; -fx-border-color: #333336; -fx-border-radius: 12; -fx-background-radius: 12;");
 
         botonSiguiente = flechaBonita(">");
-        VBox miniaturaSigLayout = hacerCartaChiquitaMaqueta("Siguiente");
+        VBox miniaturaSigLayout = hacerCartaChiquitaMaqueta();
         contenedorMiniSig = (StackPane) miniaturaSigLayout.getChildren().get(0);
 
         carrusel.getChildren().addAll(miniaturaAntLayout, botonAnterior, contenedorImagenCentral, botonSiguiente, miniaturaSigLayout);
@@ -153,15 +158,13 @@ public class Vista extends BorderPane {
         return panel;
     }
 
-    private VBox hacerCartaChiquitaMaqueta(String etiqueta) {
+    private VBox hacerCartaChiquitaMaqueta() {
         VBox vbox = new VBox(10);
         vbox.setAlignment(Pos.CENTER);
         StackPane rectangulo = new StackPane();
         rectangulo.setPrefSize(70, 100);
         rectangulo.setStyle("-fx-background-color: transparent; -fx-border-color: #333336; -fx-border-radius: 8;");
-        Label etiquetaRectangulo = new Label(etiqueta);
-        etiquetaRectangulo.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 11px;");
-        vbox.getChildren().addAll(rectangulo, etiquetaRectangulo);
+        vbox.getChildren().addAll(rectangulo);
         return vbox;
     }
 
