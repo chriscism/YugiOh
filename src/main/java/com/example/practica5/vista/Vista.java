@@ -1,5 +1,6 @@
 package com.example.practica5.vista;
 
+import com.example.practica5.modelo.CartaYugioh;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,6 +10,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 
 public class Vista extends BorderPane {
+    Label queMuestra;
+    Label lblContador;
+    Label nombreCarta;
+    Label nivelCarta;
     public Vista(){
         this.setStyle("-fx-background-color: #161618;");
         this.setLeft(crearMenuLateral());
@@ -46,11 +51,11 @@ public class Vista extends BorderPane {
         // encabezados
         HBox encabezado = new HBox();
         encabezado.setAlignment(Pos.CENTER_LEFT);
-        Label queMuestra = new Label("Mostrando: todas las cartas");
+        queMuestra = new Label("Mostrando: todas las cartas");
         queMuestra.setStyle("-fx-text-fill: #e8e8e8;");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        Label lblContador = new Label("34 / 283");
+        lblContador = new Label("34 / 283");
         lblContador.setStyle("-fx-text-fill: #e8e8e8; -fx-border-color: #333336; -fx-border-radius: 5; -fx-padding: 4 10;");
         encabezado.getChildren().addAll(queMuestra, spacer, lblContador);
         // el carrusel de fotos de las cartas
@@ -62,9 +67,6 @@ public class Vista extends BorderPane {
         StackPane contenedorImagen = new StackPane();
         contenedorImagen.setPrefSize(280, 400);
         contenedorImagen.setStyle("-fx-background-color: #1a1a1c; -fx-border-color: #333336; -fx-border-radius: 12; -fx-background-radius: 12;");
-        Label lblPlaceholder = new Label("Imagen de la carta");
-        lblPlaceholder.setStyle("-fx-text-fill: #8a8a8e;");
-        contenedorImagen.getChildren().add(lblPlaceholder);
         Button botonSiguiente = flechaBonita(">");
         VBox miniaturaSig = hacerCartaChiquitaMaqueta("Siguiente");
 
@@ -72,9 +74,9 @@ public class Vista extends BorderPane {
         // nombre y nivel de la carta
         VBox titulos = new VBox(10);
         titulos.setAlignment(Pos.CENTER);
-        Label nombreCarta = new Label("Nombre de la carta");
+        nombreCarta = new Label("Nombre de la carta");
         nombreCarta.setStyle("-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;");
-        Label nivelCarta = new Label("Nivel X");
+        nivelCarta = new Label("Nivel X");
         nivelCarta.setStyle("-fx-background-color: #0d2a4a; -fx-text-fill: #5ba1f5; -fx-padding: 4 12; -fx-background-radius: 12; -fx-font-size: 12px;");
         titulos.getChildren().addAll(nombreCarta, nivelCarta);
 
@@ -138,5 +140,12 @@ public class Vista extends BorderPane {
         Button btn = new Button(texto);
         btn.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: #333336; -fx-border-radius: 5; -fx-padding: 5 10; -fx-cursor: hand;");
         return btn;
+    }
+
+    public void mostrarCartas(CartaYugioh actual, CartaYugioh anterior, CartaYugioh siguiente, int indice, int total){
+        nombreCarta.setText(actual.getNombre());
+        nivelCarta.setText("Nivel " + actual.getNivel());
+        lblContador.setText(actual.getNumCarta() + "/283");
+
     }
 }
