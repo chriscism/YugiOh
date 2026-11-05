@@ -10,7 +10,7 @@ import javafx.scene.layout.*;
 
 import java.io.File;
 
-public class Vista extends BorderPane {
+public class Vista extends StackPane {
     public Button botonAnterior;
     public Button botonSiguiente;
     public Button botonTodas;
@@ -35,8 +35,9 @@ public class Vista extends BorderPane {
     public Button botonSonido;
 
     public Vista(){
-        this.setStyle("-fx-background-color: #161618;");
-        this.setLeft(crearMenuLateral());
+        BorderPane interfaz = new BorderPane();
+        interfaz.setStyle("-fx-background-color: transparent;");
+        interfaz.setLeft(crearMenuLateral());
         StackPane stack = new StackPane();
         stack.getChildren().add(crearPanelCentral());
         botonSonido = new Button();
@@ -60,7 +61,8 @@ public class Vista extends BorderPane {
         StackPane.setAlignment(botonSonido, Pos.TOP_RIGHT);
         StackPane.setMargin(botonSonido, new Insets(0, 30, 30, 0));
         stack.getChildren().add(botonSonido);
-        this.setCenter(stack);
+        interfaz.setCenter(stack);
+        this.getChildren().add(interfaz);
     }
 
     private VBox crearMenuLateral(){
@@ -68,7 +70,7 @@ public class Vista extends BorderPane {
         menu.setPadding(new Insets(20));
         menu.setSpacing(10);
         menu.setPrefWidth(220);
-        menu.setStyle("-fx-background-color: #1a1a1c; -fx-border-color: transparent #2a2a2d transparent transparent;");
+        menu.setStyle("-fx-background-color: transparent;");
 
         Label titulo = new Label("Explore by: ");
         titulo.setStyle("-fx-text-fill: #8a8a8e; -fx-font-size: 13px; -fx-padding: 0 0 10 0;");
