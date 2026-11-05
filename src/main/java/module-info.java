@@ -1,7 +1,7 @@
 module com.example.practica5 {
     requires javafx.controls;
     requires javafx.fxml;
-
+    requires javafx.media;
 
     opens com.example.practica5 to javafx.fxml;
     exports com.example.practica5;
