@@ -153,7 +153,7 @@ public class Vista extends StackPane {
 
         // stats
         VBox stats = new VBox(20);
-        stats.setStyle("-fx-background-color: #1a1a1ccc; -fx-background-radius: 12; -fx-padding: 25;");        GridPane gridStats = new GridPane();
+        stats.setStyle("-fx-background-color: trans; -fx-background-radius: 12; -fx-padding: 25;");        GridPane gridStats = new GridPane();
         gridStats.setHgap(60);
         gridStats.setVgap(15);
 
@@ -173,7 +173,14 @@ public class Vista extends StackPane {
         stats.getChildren().addAll(gridStats, seccionEfecto);
         ScrollPane statsScrolleables = new ScrollPane(stats);
         statsScrolleables.setFitToWidth(true);
-        statsScrolleables.setStyle("-fx-background: #161618; -fx-background-color: transparent; -fx-border-color: transparent;");
+        statsScrolleables.setStyle(
+                "-fx-background: transparent; " +
+                        "-fx-background-color: transparent; " +
+                        "-fx-border-color: transparent; " +
+                        // Oculta la barra vertical y horizontal
+                        "-fx-hbar-policy: never; " +
+                        "-fx-vbar-policy: never;"
+        );
         VBox.setVgrow(statsScrolleables, Priority.ALWAYS);
         panel.getChildren().addAll(encabezado, carrusel, titulos, statsScrolleables);
         return panel;
@@ -207,10 +214,30 @@ public class Vista extends StackPane {
     private MenuButton botonDesplegable(String texto, String... opciones){
         MenuButton boton = new MenuButton(texto);
         boton.setMaxWidth(Double.MAX_VALUE);
-        boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #5ba1f5; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
-        for(String opc:opciones){
+
+        // Aplicamos el fondo translúcido y el color de texto exacto #5BA1F5
+        boton.setStyle(
+                "-fx-background-color: transparent; " +
+                        "-fx-text-fill: #5BA1F5; " +
+                        "-fx-alignment: BASELINE_LEFT; " +
+                        "-fx-padding: 8 15; " +
+                        "-fx-border-color: #333336; " +
+                        "-fx-border-radius: 8; " +
+                        "-fx-background-radius: 8;"
+        );
+
+        for(String opc : opciones){
             boton.getItems().add(new MenuItem(opc));
         }
+
+        // Forzamos a la etiqueta interna del MenuButton a tomar el color #5BA1F5
+        boton.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            javafx.scene.Node label = boton.lookup(".label");
+            if (label != null) {
+                label.setStyle("-fx-text-fill: #5BA1F5;");
+            }
+        });
+
         return boton;
     }
 
