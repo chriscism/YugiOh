@@ -207,7 +207,7 @@ public class Vista extends StackPane {
     private MenuButton botonDesplegable(String texto, String... opciones){
         MenuButton boton = new MenuButton(texto);
         boton.setMaxWidth(Double.MAX_VALUE);
-        boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8e8e8; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
+        boton.setStyle("-fx-background-color: transparent; -fx-text-fill: #5ba1f5; -fx-alignment: BASELINE_LEFT; -fx-padding: 8 15; -fx-border-color: #333336; -fx-border-radius: 8; -fx-background-radius: 8;");
         for(String opc:opciones){
             boton.getItems().add(new MenuItem(opc));
         }
